@@ -1,8 +1,8 @@
-import numpy as np
-from threading import Thread
-from sympy import *
-import tkinter as tk
-from sympy import plot
+from sympy import sympify, plot, integrate, diff, limit, symbols, evalf
+try:
+    import Tkinter as tk
+except: 
+    import tkinter as tk
 
 class SloppyCalc():
     
@@ -52,7 +52,6 @@ class SloppyCalc():
         self.submit = tk.Button(self.master, text="Area", command=self.submit_area)
         self.submit.grid(row=9, column=0, sticky='w', padx = 20)
         
-        # from threading import Thread
         self.submit = tk.Button(self.master, text="Launch Graph", command=self.start_graph)
         self.submit.grid(row=10, column = 0, columnspan = 1, sticky='w', padx = 20)
         
@@ -131,9 +130,9 @@ class SloppyCalc():
         x, y = symbols('x, y')
         increments = (b - a) / 1000
         area = 0
-    
-        incrementNumbers = np.arange(a, b, increments)
-        for i in incrementNumbers:
+            
+        i = a
+        while i < b:
             height1 = top.evalf(subs={x: i}) - bottom.evalf(subs={x: i})
             height2 = top.evalf(subs={x: i + increments}) - bottom.evalf(subs={x: i + increments})
             width = increments
@@ -141,6 +140,10 @@ class SloppyCalc():
             # Trapezoidal Sum
             # a = w * ((h1 + h2) / 2)
             area += width * ((height1 + height2) / 2.0)
+            
+            i += increments
+            
+            
         
         return area
     
